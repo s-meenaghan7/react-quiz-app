@@ -1,57 +1,66 @@
 import { useState } from 'react';
 import './App.css';
 
-/*
-Issues/todos:
-  Making no selection and pressing next or prev button causes errors because of null 'value' of radio button
-  May be able to (And should do this if I can) remove the setScoreArr function declaration entirely, to prevent the warning.
-*/
-
 function App() {
-  let [i, setIndex] = useState(0); // i accesses both the questions and scoreArr data structures
-  const [scoreArr, setScoreArr] = useState([]);
+  let [index, setIndex] = useState(0); // i accesses both the questions and scoreArr data structures
+  const [scoreArr] = useState([]);
 
   const getValue = () => (document.querySelector('input[name = "answers"]:checked').value === 'true'); 
 
   const prevButtonHandler = () => {
-    setIndex((i > 0) ? i - 1 : i);
-    scoreArr[i] = getValue() ? 1 : 0;
+    if (!radioButtonSelected()) return;
+
+    setIndex((index > 0) ? index - 1 : index);
+    scoreArr[index] = getValue() ? 1 : 0;
   };
 
   const nextButtonHandler = () => {
-    setIndex((i < questions.length - 1) ? i + 1 : i);
-    scoreArr[i] = getValue() ? 1 : 0;
+    if (!radioButtonSelected()) return;
+
+    setIndex((index < questions.length - 1) ? index + 1 : index);
+    scoreArr[index] = getValue() ? 1 : 0;
   };
+
+  let radioButtonSelected = () => {
+    const answers = document.querySelectorAll('input[name = "answers"]');
+
+    for (const answer of answers)
+      if (answer.checked) return true;
+
+    return false;
+  }
 
   return (
     <div className="App">
       <div className='question-section'>
-        <h4>Question {i + 1}/{questions.length}</h4>
-        <h2>{questions[i].question}</h2>
+        <h4>Question {index + 1}/{questions.length}</h4>
+        <h2>{questions[index].question}</h2>
       </div>
 
-      <div className='answer-section'> {/* TODO: render answers dynamically with map (or foreach loop?)*/}
+      <div className='answer-section'> 
+        {/* TODO: render answers dynamically with map (or foreach loop?)*/}
+
         <label>
-          <input type='radio' name='answers' value={questions[i].options[0].isCorrect} /> {questions[i].options[0].answer}
+          <input type='radio' name='answers' value={questions[index].options[0].isCorrect} /> {questions[index].options[0].answer}
         </label>
         <label>
-          <input type='radio' name='answers' value={questions[i].options[1].isCorrect} /> {questions[i].options[1].answer}
+          <input type='radio' name='answers' value={questions[index].options[1].isCorrect} /> {questions[index].options[1].answer}
         </label>
         <label>
-          <input type='radio' name='answers' value={questions[i].options[2].isCorrect} /> {questions[i].options[2].answer}
+          <input type='radio' name='answers' value={questions[index].options[2].isCorrect} /> {questions[index].options[2].answer}
         </label>
         <label>
-          <input type='radio' name='answers' value={questions[i].options[3].isCorrect} /> {questions[i].options[3].answer}
+          <input type='radio' name='answers' value={questions[index].options[3].isCorrect} /> {questions[index].options[3].answer}
         </label>
       </div>
 
       <div className='controls'>
-        <button onClick={() => prevButtonHandler() }>
+        <button onClick={ () => prevButtonHandler() }>
           Previous
         </button>
 
         <button onClick={ () => nextButtonHandler() }>
-          {(i === questions.length - 1) ? 'Submit' : 'Next'}
+          {(index === questions.length - 1) ? 'Submit' : 'Next'}
         </button>
 
         {/* test button, delete later */}
