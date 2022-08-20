@@ -2,7 +2,7 @@ import { useState } from 'react';
 import './App.css';
 
 function App() {
-  let [index, setIndex] = useState(0); // i accesses both the questions and scoreArr data structures
+  let [index, setIndex] = useState(0); // shared index for the questions and scoreArr data structures
   const [scoreArr] = useState([]);
 
   const getValue = () => (document.querySelector('input[name = "answers"]:checked').value === 'true'); 
@@ -38,20 +38,13 @@ function App() {
       </div>
 
       <div className='answer-section'> 
-        {/* TODO: render answers dynamically with map (or foreach loop?)*/}
-
-        <label>
-          <input type='radio' name='answers' value={questions[index].options[0].isCorrect} /> {questions[index].options[0].answer}
-        </label>
-        <label>
-          <input type='radio' name='answers' value={questions[index].options[1].isCorrect} /> {questions[index].options[1].answer}
-        </label>
-        <label>
-          <input type='radio' name='answers' value={questions[index].options[2].isCorrect} /> {questions[index].options[2].answer}
-        </label>
-        <label>
-          <input type='radio' name='answers' value={questions[index].options[3].isCorrect} /> {questions[index].options[3].answer}
-        </label>
+        {
+          questions[index].options.map((answer, i) => 
+            <label key={i}>
+              <input type='radio' name='answers' value={answer.isCorrect} /> {answer.answer}
+            </label>
+          )
+        }
       </div>
 
       <div className='controls'>
