@@ -68,39 +68,39 @@ function App() {
 
 const questions = [
   {
-    question: "This is the first question",
+    question: "How do you set state in a functional React component?",
     options: [
-      {answer: "First answer", isCorrect: false},
-      {answer: "Second answer", isCorrect: true},
-      {answer: "Third answer", isCorrect: false},
-      {answer: "Fourth answer", isCorrect: false}
+      {answer: "By declaring a state variable and assigning an object.", isCorrect: false},
+      {answer: "By using the useState() Hook.", isCorrect: true},
+      {answer: "By using the setState() method on 'this'.", isCorrect: false},
+      {answer: "Functional React components do not support state.", isCorrect: false}
     ]
   },
   {
-    question: "This is the second question",
+    question: "When rendering a list of elements in JSX using the JavaScript map() method, what is required for each element rendered?",
     options: [
-      {answer: "FIRST answer", isCorrect: false},
-      {answer: "SECOND answer", isCorrect: true},
-      {answer: "THIRD answer", isCorrect: false},
-      {answer: "FOURTH answer", isCorrect: false}
+      {answer: "id", isCorrect: false},
+      {answer: "index", isCorrect: false},
+      {answer: "key", isCorrect: true},
+      {answer: "data", isCorrect: false}
     ]
   },
   {
-    question: "This is the third question",
+    question: "What is used to pass data from parent to child component?",
     options: [
-      {answer: "First ANSWER", isCorrect: false},
-      {answer: "Second ANSWER", isCorrect: true},
-      {answer: "Third ANSWER", isCorrect: false},
-      {answer: "Fourth ANSWER", isCorrect: false}
+      {answer: "props", isCorrect: true},
+      {answer: "state", isCorrect: false},
+      {answer: "Component", isCorrect: false},
+      {answer: "render()", isCorrect: false}
     ]
   },
   {
-    question: "This is the fourth question",
+    question: "What keyword is used for assigning classes for styling JSX elements within JSX code?",
     options: [
-      {answer: "FIRST ANSWER", isCorrect: false},
-      {answer: "SECOND ANSWER", isCorrect: true},
-      {answer: "THIRD ANSWER", isCorrect: false},
-      {answer: "FOURTH ANSWER", isCorrect: false}
+      {answer: "styles", isCorrect: false},
+      {answer: "class", isCorrect: false},
+      {answer: "id", isCorrect: false},
+      {answer: "className", isCorrect: true}
     ]
   }
 ]
