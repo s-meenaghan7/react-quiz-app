@@ -4,18 +4,18 @@ import './App.css';
 function App() {
   let [index, setIndex] = useState(0); // shared index for the questions and scoreArr data structures
   const [scoreArr] = useState([]);
+  const [selectedAnswers] = useState([...questions[index].options.map(() => null)]);
   let [selectedAnswer, setSelectedAnswer] = useState(null);
-  // create a MAP to store the selected answers for each question in memory! 
-  // so: when you answer q 1 > continue to q 2 > go BACK to q 1 > the previously selected answer for q 1 will be selected!
 
   const getValue = () => (document.querySelector('input[name = "answers"]:checked').value === 'true'); 
 
   const prevButtonHandler = () => {
-    if (!answerIsSelected()) return;
-
+    if (index === 0) return;
+    
     setIndex((index > 0) ? index - 1 : index);
-    scoreArr[index] = getValue() ? 1 : 0;
-    setSelectedAnswer(null);
+
+    selectedAnswers[index] = selectedAnswer;
+    setSelectedAnswer(selectedAnswers[index - 1]);
   };
 
   const nextButtonHandler = () => {
@@ -23,7 +23,9 @@ function App() {
 
     setIndex((index < questions.length - 1) ? index + 1 : index);
     scoreArr[index] = getValue() ? 1 : 0;
-    setSelectedAnswer(null);
+
+    selectedAnswers[index] = selectedAnswer;
+    setSelectedAnswer(selectedAnswers[index + 1]);
   };
 
   let answerIsSelected = () => {
@@ -33,6 +35,17 @@ function App() {
       if (answer.checked) return true;
 
     return false;
+  }
+  
+  const answerChanged = (answerId) => {
+    // this happens first so that selectedAnswer is not null (when radio button is clicked) and then...
+    selectedAnswer = answerId;
+
+    // ... this line actually assigns the not-null selectedAnswer value to the array of selectedAnswers
+    selectedAnswers[index] = selectedAnswer;
+    
+    // this must be called, or a radio button cannot actually be selected
+    setSelectedAnswer(answerId);
   }
 
   return (
@@ -46,9 +59,9 @@ function App() {
         {
           questions[index].options
             .map((answer) => 
-              <label key={answer.id}>
+              <label key={answer.id} className='answer'>
                 <input type='radio' name='answers' value={answer.isCorrect} 
-                      onChange={() => setSelectedAnswer(answer.id)} checked={selectedAnswer === answer.id} 
+                      onChange={() => answerChanged(answer.id)} checked={selectedAnswer === answer.id} 
                 /> {answer.answer}
               </label>
             )
@@ -63,7 +76,9 @@ function App() {
         <button onClick={ () => nextButtonHandler() }>
           {(index === questions.length - 1) ? 'Submit' : 'Next'}
         </button>
+      </div>
 
+      <div className='test-controls'>
         {/* test button, delete later */}
         <button onClick={() => console.log(scoreArr.reduce((total, curr) => { return total + curr; }, 0))}>
           Get Score
@@ -74,6 +89,10 @@ function App() {
           Get selectedAnswer
         </button>
 
+        {/* test button, delete later */}
+        <button onClick={() => console.log(selectedAnswers)}>
+          Get selectedAnswers array
+        </button>
       </div>
     </div>
   );
