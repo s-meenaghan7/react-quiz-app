@@ -5,4 +5,9 @@
 .answer-section {
   display: flex;
   flex-direction: column;
+  margin: 10px;
+}
+
+.answer {
+  margin: 5px;
 }
