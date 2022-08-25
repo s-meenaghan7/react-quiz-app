@@ -10,4 +10,6 @@ This is a small quiz application that allows the user to complete a quiz. The pr
 
 ---
 
-*unfinished work in progress: for starters, some styles would be nice. more to come!*
+*TODO:*
+- *Modularize the code into multiple components*
+- *Give it some style*

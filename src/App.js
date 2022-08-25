@@ -6,10 +6,13 @@ function App() {
   const [scoreArr] = useState([]);
   const [selectedAnswers] = useState([...questions[index].options.map(() => null)]);
   let [selectedAnswer, setSelectedAnswer] = useState(null);
+  let [quizComplete, setQuizComplete] = useState(false);
 
   const getValue = () => (document.querySelector('input[name = "answers"]:checked').value === 'true'); 
 
-  const quizComplete = (answers) => (answers.findIndex(ans => ans === null) === -1);
+  const allQuestionsAnswered = (answers) => (answers.findIndex(ans => ans === null) === -1);
+
+  let getFinalScore = (arr) => arr.reduce((total, curr) => { return total + curr; }, 0);
 
   const prevButtonHandler = () => {
     if (index === 0) return;
@@ -39,8 +42,10 @@ function App() {
 
   const submitQuiz = (arr) => {
     scoreArr[index] = getValue() ? 1 : 0;
-    const score = arr.reduce((total, curr) => { return total + curr; }, 0);
+    const score = getFinalScore(arr);
     console.log('Final score: ' + score + ' out of ' + questions.length);
+
+    setQuizComplete(true);
   };
 
   let answerIsSelected = () => {
@@ -63,13 +68,19 @@ function App() {
     setSelectedAnswer(answerId);
 
     // reveal the Submit button if all questions have a selected answer
-    if (quizComplete(selectedAnswers)) {
+    if (allQuestionsAnswered(selectedAnswers)) {
       const submitButton = document.querySelector('#submit');
       submitButton.removeAttribute('hidden');
     }
   };
 
-  return (
+  return ((quizComplete)
+      ?
+    <div className='App'>
+      <h1>Quiz Complete!</h1>
+      <h2>Final score: {getFinalScore(scoreArr)} out of {questions.length}</h2>
+    </div>
+      :
     <div className="App">
       <div className='question-section'>
         <h4>Question {index + 1}/{questions.length}</h4>
@@ -103,18 +114,15 @@ function App() {
         </button>
       </div>
 
-      <div className='test-controls'>
-        {/* test button, delete later */}
+      <div className='test-controls' hidden>
         <button onClick={() => console.log(scoreArr.reduce((total, curr) => { return total + curr; }, 0))}>
           Get Score
         </button>
 
-        {/* test button, delete later */}
         <button onClick={() => console.log(selectedAnswer)}>
           Get selectedAnswer
         </button>
 
-        {/* test button, delete later */}
         <button onClick={() => console.log(selectedAnswers)}>
           Get selectedAnswers array
         </button>
