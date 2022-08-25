@@ -9,8 +9,14 @@ function App() {
 
   const getValue = () => (document.querySelector('input[name = "answers"]:checked').value === 'true'); 
 
+  const quizComplete = (answers) => (answers.findIndex(ans => ans === null) === -1);
+
   const prevButtonHandler = () => {
     if (index === 0) return;
+
+    if (answerIsSelected()) {
+      scoreArr[index] = getValue() ? 1 : 0;
+    }
     
     setIndex((index > 0) ? index - 1 : index);
 
@@ -19,13 +25,22 @@ function App() {
   };
 
   const nextButtonHandler = () => {
-    if (!answerIsSelected()) return;
+    if (index === questions.length - 1) return;
+
+    if (answerIsSelected()) {
+      scoreArr[index] = getValue() ? 1 : 0;
+    }
 
     setIndex((index < questions.length - 1) ? index + 1 : index);
-    scoreArr[index] = getValue() ? 1 : 0;
 
     selectedAnswers[index] = selectedAnswer;
     setSelectedAnswer(selectedAnswers[index + 1]);
+  };
+
+  const submitQuiz = (arr) => {
+    scoreArr[index] = getValue() ? 1 : 0;
+    const score = arr.reduce((total, curr) => { return total + curr; }, 0);
+    console.log('Final score: ' + score + ' out of ' + questions.length);
   };
 
   let answerIsSelected = () => {
@@ -35,7 +50,7 @@ function App() {
       if (answer.checked) return true;
 
     return false;
-  }
+  };
   
   const answerChanged = (answerId) => {
     // this happens first so that selectedAnswer is not null (when radio button is clicked) and then...
@@ -46,13 +61,19 @@ function App() {
     
     // this must be called, or a radio button cannot actually be selected
     setSelectedAnswer(answerId);
-  }
+
+    // reveal the Submit button if all questions have a selected answer
+    if (quizComplete(selectedAnswers)) {
+      const submitButton = document.querySelector('#submit');
+      submitButton.removeAttribute('hidden');
+    }
+  };
 
   return (
     <div className="App">
       <div className='question-section'>
         <h4>Question {index + 1}/{questions.length}</h4>
-        <h2>{questions[index].question}</h2>
+        <h3>{questions[index].question}</h3>
       </div>
 
       <div className='answer-section'> 
@@ -74,7 +95,11 @@ function App() {
         </button>
 
         <button onClick={ () => nextButtonHandler() }>
-          {(index === questions.length - 1) ? 'Submit' : 'Next'}
+          Next
+        </button>
+
+        <button id='submit' onClick={ () => submitQuiz(scoreArr) } hidden>
+          Submit
         </button>
       </div>
 
@@ -100,7 +125,6 @@ function App() {
 
 const questions = [
   {
-    // id: 1,
     question: "How do you set state in a functional React component?",
     options: [
       {id: 1, answer: "By declaring a state variable and assigning an object.", isCorrect: false},
@@ -110,7 +134,6 @@ const questions = [
     ]
   },
   {
-    // id: 2,
     question: "When rendering a list of elements in JSX using the JavaScript map() method, what is required for each element rendered?",
     options: [
       {id: 1, answer: "id", isCorrect: false},
@@ -120,7 +143,6 @@ const questions = [
     ]
   },
   {
-    // id: 3,
     question: "What is used to pass data from parent to child component?",
     options: [
       {id: 1, answer: "props", isCorrect: true},
@@ -130,7 +152,6 @@ const questions = [
     ]
   },
   {
-    // id: 4,
     question: "What keyword is used for assigning classes for styling JSX elements within JSX code?",
     options: [
       {id: 1, answer: "styles", isCorrect: false},
