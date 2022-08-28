@@ -1,137 +1,63 @@
 import { useState } from 'react';
 import './App.css';
+import AnswerSection from './components/AnswerSection';
+import Controls from './components/Controls';
+import QuestionSection from './components/QuestionSection';
+import Result from './components/Result';
+import TestControls from './components/TestControls';
 
 function App() {
   let [index, setIndex] = useState(0); // shared index for the questions and scoreArr data structures
   const [scoreArr] = useState([]);
-  const [selectedAnswers] = useState([...questions[index].options.map(() => null)]);
+  const [selectedAnswers] = useState([...QUIZ_DATA[index].options.map(() => null)]);
   let [selectedAnswer, setSelectedAnswer] = useState(null);
-  let [quizComplete, setQuizComplete] = useState(false);
-
-  const getValue = () => (document.querySelector('input[name = "answers"]:checked').value === 'true'); 
-
-  const allQuestionsAnswered = (answers) => (answers.findIndex(ans => ans === null) === -1);
+  let [quizSubmitted, setQuizSubmitted] = useState(false);
 
   let getFinalScore = (arr) => arr.reduce((total, curr) => { return total + curr; }, 0);
 
-  const prevButtonHandler = () => {
-    if (index === 0) return;
-
-    if (answerIsSelected()) {
-      scoreArr[index] = getValue() ? 1 : 0;
-    }
-    
-    setIndex((index > 0) ? index - 1 : index);
-
-    selectedAnswers[index] = selectedAnswer;
-    setSelectedAnswer(selectedAnswers[index - 1]);
-  };
-
-  const nextButtonHandler = () => {
-    if (index === questions.length - 1) return;
-
-    if (answerIsSelected()) {
-      scoreArr[index] = getValue() ? 1 : 0;
-    }
-
-    setIndex((index < questions.length - 1) ? index + 1 : index);
-
-    selectedAnswers[index] = selectedAnswer;
-    setSelectedAnswer(selectedAnswers[index + 1]);
-  };
-
-  const submitQuiz = (arr) => {
-    scoreArr[index] = getValue() ? 1 : 0;
-    const score = getFinalScore(arr);
-    console.log('Final score: ' + score + ' out of ' + questions.length);
-
-    setQuizComplete(true);
-  };
-
-  let answerIsSelected = () => {
-    const answers = document.querySelectorAll('input[name = "answers"]');
-
-    for (const answer of answers)
-      if (answer.checked) return true;
-
-    return false;
-  };
-  
-  const answerChanged = (answerId) => {
-    // this happens first so that selectedAnswer is not null (when radio button is clicked) and then...
-    selectedAnswer = answerId;
-
-    // ... this line actually assigns the not-null selectedAnswer value to the array of selectedAnswers
-    selectedAnswers[index] = selectedAnswer;
-    
-    // this must be called, or a radio button cannot actually be selected
-    setSelectedAnswer(answerId);
-
-    // reveal the Submit button if all questions have a selected answer
-    if (allQuestionsAnswered(selectedAnswers)) {
-      const submitButton = document.querySelector('#submit');
-      submitButton.removeAttribute('hidden');
-    }
-  };
-
-  return ((quizComplete)
+  return ((quizSubmitted)
       ?
-    <div className='App'>
-      <h1>Quiz Complete!</h1>
-      <h2>Final score: {getFinalScore(scoreArr)} out of {questions.length}</h2>
-    </div>
+    <Result 
+      points={getFinalScore(scoreArr)}
+      total={QUIZ_DATA.length}
+    />
       :
     <div className="App">
-      <div className='question-section'>
-        <h4>Question {index + 1}/{questions.length}</h4>
-        <h3>{questions[index].question}</h3>
-      </div>
+      <QuestionSection
+        current={index + 1}
+        total={QUIZ_DATA.length}
+        question={QUIZ_DATA[index].question}
+      />
 
-      <div className='answer-section'> 
-        {
-          questions[index].options
-            .map((answer) => 
-              <label key={answer.id} className='answer'>
-                <input type='radio' name='answers' value={answer.isCorrect} 
-                      onChange={() => answerChanged(answer.id)} checked={selectedAnswer === answer.id} 
-                /> {answer.answer}
-              </label>
-            )
-        }
-      </div>
+      <AnswerSection 
+        index={index}
+        currentAnswers={QUIZ_DATA[index]}
+        selectedAnswer={selectedAnswer}
+        setSelectedAnswer={setSelectedAnswer}
+        selectedAnswers={selectedAnswers}
+      />
 
-      <div className='controls'>
-        <button onClick={ () => prevButtonHandler() }>
-          Previous
-        </button>
+      <Controls 
+        index={index}
+        setIndex={setIndex}
+        scoreArr={scoreArr}
+        selectedAnswers={selectedAnswers}
+        selectedAnswer={selectedAnswer}
+        setSelectedAnswer={setSelectedAnswer}
+        lastIndex={QUIZ_DATA.length - 1}
+        setQuizSubmitted={setQuizSubmitted}
+      />
 
-        <button onClick={ () => nextButtonHandler() }>
-          Next
-        </button>
-
-        <button id='submit' onClick={ () => submitQuiz(scoreArr) } hidden>
-          Submit
-        </button>
-      </div>
-
-      <div className='test-controls' hidden>
-        <button onClick={() => console.log(scoreArr.reduce((total, curr) => { return total + curr; }, 0))}>
-          Get Score
-        </button>
-
-        <button onClick={() => console.log(selectedAnswer)}>
-          Get selectedAnswer
-        </button>
-
-        <button onClick={() => console.log(selectedAnswers)}>
-          Get selectedAnswers array
-        </button>
-      </div>
+      <TestControls
+        selectedAnswer={selectedAnswer}
+        selectedAnswers={selectedAnswers}
+        scoreArr={scoreArr}
+      />
     </div>
   );
 }
 
-const questions = [
+const QUIZ_DATA = [
   {
     question: "How do you set state in a functional React component?",
     options: [
