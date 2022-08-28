@@ -49,18 +49,18 @@ export default function Controls({index, setIndex, scoreArr, selectedAnswers, se
     };
 
     return (
-            <div className='controls'>
-                <button onClick={ () => prevButtonHandler() }>
-                    Previous
-                </button>
+        <div className='controls'>
+            <button onClick={ () => prevButtonHandler() }>
+                Previous
+            </button>
 
-                <button onClick={ () => nextButtonHandler() }>
-                    Next
-                </button>
+            <button onClick={ () => nextButtonHandler() }>
+                Next
+            </button>
 
-                <button id='submit' onClick={ () => submitQuiz(scoreArr) } hidden>
-                    Submit
-                </button>
-            </div>
+            <button id='submit' onClick={ () => submitQuiz(scoreArr) } hidden>
+                Submit
+            </button>
+        </div>
     );
 };

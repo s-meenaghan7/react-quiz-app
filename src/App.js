@@ -13,7 +13,7 @@ function App() {
   let [selectedAnswer, setSelectedAnswer] = useState(null);
   let [quizSubmitted, setQuizSubmitted] = useState(false);
 
-  let getFinalScore = (arr) => arr.reduce((total, curr) => { return total + curr; }, 0);
+  const getFinalScore = (arr) => arr.reduce((total, curr) => { return total + curr; }, 0);
 
   return ((quizSubmitted)
       ?
