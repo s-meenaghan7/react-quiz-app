@@ -11,5 +11,4 @@ This is a small quiz application that allows the user to complete a quiz. The pr
 ---
 
 *TODO:*
-- *Modularize the code into multiple components*
 - *Give it some style*
