@@ -2,7 +2,7 @@ import React from 'react';
 
 export default function Controls({index, setIndex, scoreArr, selectedAnswers, selectedAnswer, setSelectedAnswer, lastIndex, setQuizSubmitted}) {
 
-    const getValue = () => (document.querySelector('input[name = "answers"]:checked').value === 'true');
+    const getValue = () => (document.querySelector('input[name = "answers"]:checked').value === 'true') ? 1 : 0;
 
     const getFinalScore = (arr) => arr.reduce((total, curr) => { return total + curr; }, 0);
 
@@ -19,7 +19,7 @@ export default function Controls({index, setIndex, scoreArr, selectedAnswers, se
         if (index === 0) return;
     
         if (answerIsSelected()) {
-          scoreArr[index] = getValue() ? 1 : 0;
+          scoreArr[index] = getValue();
         }
         
         setIndex((index > 0) ? index - 1 : index);
@@ -31,7 +31,7 @@ export default function Controls({index, setIndex, scoreArr, selectedAnswers, se
         if (index === lastIndex) return;
     
         if (answerIsSelected()) {
-          scoreArr[index] = getValue() ? 1 : 0;
+          scoreArr[index] = getValue();
         }
     
         setIndex((index < lastIndex) ? index + 1 : index);
@@ -40,7 +40,7 @@ export default function Controls({index, setIndex, scoreArr, selectedAnswers, se
     };
 
     const submitQuiz = (scoreArr) => {
-        scoreArr[index] = getValue() ? 1 : 0;
+        scoreArr[index] = getValue();
         const score = getFinalScore(scoreArr);
 
         console.log('Final score: ' + score + ' out of ' + (lastIndex + 1));
