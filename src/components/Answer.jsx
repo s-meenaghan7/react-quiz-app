@@ -1,4 +1,5 @@
 import React from 'react';
+import '../styles/Answer.css';
 
 export default function Answer({answer, answerChanged, selectedAnswer}) {
     return (

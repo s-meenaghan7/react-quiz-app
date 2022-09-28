@@ -1,4 +1,5 @@
 import React from 'react';
+import '../styles/QuestionSection.css';
 
 export default function QuestionSection({current, total, question}) {
     return (

@@ -1,7 +1,8 @@
 import React from 'react';
+import '../styles/Controls.css';
 
 export default function Controls({index, setIndex, scoreArr, selectedAnswers, selectedAnswer, setSelectedAnswer, lastIndex, setQuizSubmitted}) {
-
+    // gives 1 point if the selected answer for this question is true, 0 if not.
     const getValue = () => (document.querySelector('input[name = "answers"]:checked').value === 'true') ? 1 : 0;
 
     const getFinalScore = (arr) => arr.reduce((total, curr) => { return total + curr; }, 0);
