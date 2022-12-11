@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import './styles/App.css';
+import './App.css';
 import AnswerSection from './components/AnswerSection';
 import Controls from './components/Controls';
 import QuestionSection from './components/QuestionSection';
@@ -23,6 +23,17 @@ function App() {
     />
       :
     <div className="App">
+      <Controls 
+        index={index}
+        setIndex={setIndex}
+        scoreArr={scoreArr}
+        selectedAnswers={selectedAnswers}
+        selectedAnswer={selectedAnswer}
+        setSelectedAnswer={setSelectedAnswer}
+        lastIndex={QUIZ_DATA.length - 1}
+        setQuizSubmitted={setQuizSubmitted}
+      />
+
       <QuestionSection
         current={index + 1}
         total={QUIZ_DATA.length}
@@ -35,17 +46,6 @@ function App() {
         selectedAnswer={selectedAnswer}
         setSelectedAnswer={setSelectedAnswer}
         selectedAnswers={selectedAnswers}
-      />
-
-      <Controls 
-        index={index}
-        setIndex={setIndex}
-        scoreArr={scoreArr}
-        selectedAnswers={selectedAnswers}
-        selectedAnswer={selectedAnswer}
-        setSelectedAnswer={setSelectedAnswer}
-        lastIndex={QUIZ_DATA.length - 1}
-        setQuizSubmitted={setQuizSubmitted}
       />
 
       <TestControls
