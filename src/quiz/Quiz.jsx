@@ -17,14 +17,14 @@ export default function Quiz(props) {
   const getFinalScore = (arr) => arr.reduce((total, curr) => { return total + curr; }, 0);
 
   return ((quizSubmitted)
-      ?
-    <Result 
+    ?
+    <Result
       points={getFinalScore(scoreArr)}
       total={QUIZ_DATA.length}
     />
-      :
+    :
     <div className="quiz">
-      <Controls 
+      <Controls
         index={index}
         setIndex={setIndex}
         scoreArr={scoreArr}
@@ -41,7 +41,7 @@ export default function Quiz(props) {
         question={QUIZ_DATA[index].question}
       />
 
-      <AnswerSection 
+      <AnswerSection
         index={index}
         currentAnswers={QUIZ_DATA[index]}
         selectedAnswer={selectedAnswer}
