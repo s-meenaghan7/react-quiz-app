@@ -9,6 +9,3 @@ The idea behind this project was to get more comfortable with React. After decid
 This is a small quiz application that allows the user to complete a quiz. The program keeps track of the user's score as they complete the quiz. The implementation makes adding or removing questions and/or answers very easy.
 
 ---
-
-*TODO:*
-- *Give it some style*
