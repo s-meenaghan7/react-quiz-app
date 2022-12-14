@@ -1,6 +1,18 @@
+.answer-button {
+  margin: 5px;
+}
+
 .answer {
-  margin: 10px;
+  text-align: left;
+  padding-top: 7px;
   font-size: 1.2em;
+}
+
+.answer-container {
+  display: grid;
+  grid-template-columns: 1fr 3fr;
+  width: 100%;
+  height: 100%;
 }
 
 /* RADIO BUTTONS */
@@ -14,7 +26,6 @@
   border: 4px solid var(--darkBlue);
   padding: 5px;
   cursor: pointer;
-  /* transition: .3s; */
   background: radial-gradient(farthest-side, var(--detailOrange) 96%, #0000) 50%/0 0 no-repeat content-box;
 }
 
