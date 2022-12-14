@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import '../styles/Controls.css';
+import Footer from './Footer';
 
 export default function Controls({ index, setIndex, scoreArr, selectedAnswers, selectedAnswer, setSelectedAnswer, setQuizSubmitted }) {
 
@@ -57,24 +58,29 @@ export default function Controls({ index, setIndex, scoreArr, selectedAnswers, s
   };
 
   const submitQuiz = (scoreArr) => {
+    console.log('submitQuiz called');
+
     scoreArr[index] = getValue();
 
     setQuizSubmitted(true);
   };
 
   return (
-    <div className='controls-container'>
-      <button id='prev' type='button' className='controls-button' onClick={() => prevButtonHandler()}>
-        Previous Question
-      </button>
+    <>
+      <div className='controls-container'>
+        <button id='prev' type='button' className='controls-button' onClick={() => prevButtonHandler()}>
+          Previous Question
+        </button>
 
-      <button type='button' className='controls-button' id='submit' onClick={() => submitQuiz(scoreArr)} hidden>
-        Submit
-      </button>
+        <button id='next' type='button' className='controls-button' onClick={() => nextButtonHandler()}>
+          Next Question
+        </button>
+      </div>
 
-      <button id='next' type='button' className='controls-button' onClick={() => nextButtonHandler()}>
-        Next Question
-      </button>
-    </div>
+      <Footer
+        scoreArr={scoreArr}
+        submitQuiz={submitQuiz}
+      />
+    </>
   );
 };

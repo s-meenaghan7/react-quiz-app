@@ -18,8 +18,8 @@ export default function AnswerSection({ index, currentAnswers, selectedAnswer, s
 
     // reveal the Submit button if all questions have a selected answer
     if (allQuestionsAnswered(selectedAnswers)) {
-      const submitButton = document.querySelector('#submit');
-      submitButton.removeAttribute('hidden');
+      const submitButton = document.getElementById('submit');
+      submitButton.removeAttribute('disabled');
     }
   };
 

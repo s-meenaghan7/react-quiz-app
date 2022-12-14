@@ -14,7 +14,9 @@ export default function Answer({ answer, answerChanged, selectedAnswer }) {
           checked={selectedAnswer === answer.id}
         />
       </label>
-      <span className='answer'> {answer.answer} </span>
+      <span className='answer'>
+        {answer.answer}
+      </span>
     </div>
   );
 }
