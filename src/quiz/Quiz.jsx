@@ -4,7 +4,7 @@ import AnswerSection from './components/AnswerSection';
 import Controls from './components/Controls';
 import QuestionSection from './components/QuestionSection';
 import Result from './components/Result';
-import TestControls from './components/TestControls';
+import TestControls from './test_controls/TestControls';
 
 export default function Quiz({ QUIZ_DATA }) {
   let [index, setIndex] = useState(0); // shared index for the questions and scoreArr data structures
@@ -22,36 +22,39 @@ export default function Quiz({ QUIZ_DATA }) {
       total={QUIZ_DATA.length}
     />
     :
-    <div className="quiz">
-      <Controls
-        index={index}
-        setIndex={setIndex}
-        scoreArr={scoreArr}
-        selectedAnswers={selectedAnswers}
-        selectedAnswer={selectedAnswer}
-        setSelectedAnswer={setSelectedAnswer}
-        setQuizSubmitted={setQuizSubmitted}
-      />
+    <>
+      <div className="quiz">
+        <Controls
+          index={index}
+          setIndex={setIndex}
+          scoreArr={scoreArr}
+          selectedAnswers={selectedAnswers}
+          selectedAnswer={selectedAnswer}
+          setSelectedAnswer={setSelectedAnswer}
+          setQuizSubmitted={setQuizSubmitted}
+        />
 
-      <QuestionSection
-        current={index + 1}
-        total={QUIZ_DATA.length}
-        question={QUIZ_DATA[index].question}
-      />
+        <QuestionSection
+          current={index + 1}
+          total={QUIZ_DATA.length}
+          question={QUIZ_DATA[index].question}
+        />
 
-      <AnswerSection
-        index={index}
-        currentAnswers={QUIZ_DATA[index]}
-        selectedAnswer={selectedAnswer}
-        setSelectedAnswer={setSelectedAnswer}
-        selectedAnswers={selectedAnswers}
-      />
+        <AnswerSection
+          index={index}
+          currentAnswers={QUIZ_DATA[index]}
+          selectedAnswer={selectedAnswer}
+          setSelectedAnswer={setSelectedAnswer}
+          selectedAnswers={selectedAnswers}
+        />
+      </div>
 
       <TestControls
+        hidden={true}
         selectedAnswer={selectedAnswer}
         selectedAnswers={selectedAnswers}
         scoreArr={scoreArr}
       />
-    </div>
+    </>
   );
 }
