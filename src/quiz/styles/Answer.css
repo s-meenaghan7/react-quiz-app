@@ -1,5 +1,6 @@
 .answer {
-  margin: 5px;
+  margin: 10px;
+  font-size: 1.2em;
 }
 
 /* RADIO BUTTONS */
@@ -13,7 +14,7 @@
   border: 4px solid var(--darkBlue);
   padding: 5px;
   cursor: pointer;
-  transition: .3s;
+  /* transition: .3s; */
   background: radial-gradient(farthest-side, var(--detailOrange) 96%, #0000) 50%/0 0 no-repeat content-box;
 }
 

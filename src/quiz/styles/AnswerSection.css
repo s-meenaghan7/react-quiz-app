@@ -1,7 +1,5 @@
 .answer-section {
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
-  /* text-align: left; */
   padding: 20px;
 }

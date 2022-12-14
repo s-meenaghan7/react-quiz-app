@@ -1,11 +1,9 @@
 import React from 'react';
 import '../styles/Controls.css';
 
-export default function Controls({ index, setIndex, scoreArr, selectedAnswers, selectedAnswer, setSelectedAnswer, lastIndex, setQuizSubmitted }) {
+export default function Controls({ index, setIndex, scoreArr, selectedAnswers, selectedAnswer, setSelectedAnswer, setQuizSubmitted }) {
   // gives 1 point if the selected answer for this question is true, 0 if not.
   const getValue = () => (document.querySelector('input[name = "answers"]:checked').value === 'true') ? 1 : 0;
-
-  const getFinalScore = (arr) => arr.reduce((total, curr) => { return total + curr; }, 0);
 
   const answerIsSelected = () => {
     const answers = document.querySelectorAll('input[name = "answers"]');
@@ -29,22 +27,19 @@ export default function Controls({ index, setIndex, scoreArr, selectedAnswers, s
   };
 
   const nextButtonHandler = () => {
-    if (index === lastIndex) return;
+    if (index === selectedAnswers.length - 1) return;
 
     if (answerIsSelected()) {
       scoreArr[index] = getValue();
     }
 
-    setIndex((index < lastIndex) ? index + 1 : index);
+    setIndex((index < selectedAnswers.length - 1) ? index + 1 : index);
     selectedAnswers[index] = selectedAnswer;
     setSelectedAnswer(selectedAnswers[index + 1]);
   };
 
   const submitQuiz = (scoreArr) => {
     scoreArr[index] = getValue();
-    const score = getFinalScore(scoreArr);
-
-    console.log('Final score: ' + score + ' out of ' + (lastIndex + 1));
 
     setQuizSubmitted(true);
   };

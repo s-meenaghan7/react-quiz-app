@@ -4,8 +4,8 @@ import '../styles/QuestionSection.css';
 export default function QuestionSection({ current, total, question }) {
   return (
     <div className='question-section'>
-      <h4>Question {current}/{total}</h4>
-      <h3>{question}</h3>
+      <h3>Question {current}/{total}</h3>
+      <h2>{question}</h2>
     </div>
   );
 };

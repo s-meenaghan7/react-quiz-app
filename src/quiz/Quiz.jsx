@@ -5,9 +5,8 @@ import Controls from './components/Controls';
 import QuestionSection from './components/QuestionSection';
 import Result from './components/Result';
 import TestControls from './components/TestControls';
-import { QUIZ_DATA } from '../app/quiz_data/QuizData';
 
-export default function Quiz(props) {
+export default function Quiz({ QUIZ_DATA }) {
   let [index, setIndex] = useState(0); // shared index for the questions and scoreArr data structures
   const [scoreArr] = useState([]);
   const [selectedAnswers] = useState([...QUIZ_DATA[index].options.map(() => null)]);
@@ -31,7 +30,6 @@ export default function Quiz(props) {
         selectedAnswers={selectedAnswers}
         selectedAnswer={selectedAnswer}
         setSelectedAnswer={setSelectedAnswer}
-        lastIndex={QUIZ_DATA.length - 1}
         setQuizSubmitted={setQuizSubmitted}
       />
 
